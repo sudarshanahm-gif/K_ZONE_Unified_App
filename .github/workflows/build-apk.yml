@@ -1,0 +1,35 @@
+name: Build K ZONE APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Extract Android project
+        run: |
+          mkdir -p buildsrc
+          unzip -q K_ZONE_Unified_Android_App_v1.zip -d buildsrc
+
+      - name: Build APK
+        working-directory: buildsrc/kzone_android
+        run: gradle assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: K-ZONE-APK
+          path: buildsrc/kzone_android/app/build/outputs/apk/debug/app-debug.apk
