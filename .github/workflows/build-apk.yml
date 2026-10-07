@@ -22,7 +22,7 @@ jobs:
       - name: Extract Android project
         run: |
           mkdir -p buildsrc
-          unzip -q K_ZONE_Unified_Android_App_v1.zip -d buildsrc
+          unzip -q K_ZONE_Unified_App_V1_Design_Upgrade_v2.zip -d buildsrc
 
       - name: Build APK
         working-directory: buildsrc/kzone_android
